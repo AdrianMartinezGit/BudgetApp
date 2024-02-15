@@ -1,4 +1,4 @@
-import { onPageStart, updateBudgetBalance, createTransactionLog } from './functions.js'
+import { onPageStart, updateBudgetBalance, createTransactionLog, manageExpensesModal } from './functions.js'
 import { updateBudgetValueFromLocalStorage, saveExpenseToLocalStorage } from './localstorage.js'
 
 let manageExpensesBtn = document.getElementById('manageExpensesBtn');
@@ -23,7 +23,7 @@ if (modalUpdateBudgetBtn !== null) {
 
 if (manageExpensesBtn !== null) {
     manageExpensesBtn.addEventListener('click', () => {
-        //ManageExpensesModal();
+        //manageExpensesModal();
     })
 }
 

@@ -3,6 +3,7 @@ import { getBudgetValueFromLocalStorage, getExpensesFromLocalStorage, removeExpe
 let transactionLogDiv = document.getElementById('transactionLogDiv');
 let balanceCurrentValue = document.getElementById('balanceCurrentValue');
 let headerTitle = document.getElementById('headerTitle');
+let manageExpenseElementsDiv = document.getElementById('manageExpenseElementsDiv');
 
 const onPageStart = () => {
     balanceCurrentValue.textContent = updateBudgetBalance();
@@ -90,5 +91,49 @@ const removeExpenseToTransactionLog = (index) => {
     transactionLogDiv.appendChild(div);
 }
 
+const manageExpensesModal = () => {
+    manageExpenseElementsDiv.innerHTML = '';
+    let savedExpenses = GetLocalStorageExpenses();
+    
+    savedExpenses.forEach(expense, i => {
+        let p1 = document.createElement('p');
+        p1.textContent = expense.expenseName +': ';
 
-export { createTransactionLog, onPageStart, updateBudgetBalance, addExpenseToTransactionLog }
+        let div1 = document.createElement('div');
+        div1.appendChild(p1);
+
+        let p2 = document.createElement('p');
+        p2.textContent = '-' + savedExpenses.expenseValue;
+
+        let div2 = document.createElement('div');
+        div2.appendChild(p2);
+
+        let div3 = document.createElement('div');
+        div3.appendChild(div1);
+        div3.appendChild(div2);
+
+        let button = document.createElement('button');
+        button.textContent = 'Remove Expense';
+
+        button.addEventListener('click', () => {
+            removeExpenseToTransactionLog(i);
+            removeExpenseFromLocalStorage(expense);
+            manageExpensesModal();
+            balanceCurrentValue.textContent = updateBudgetBalance();
+        });
+
+        let div4 = document.createElement('div');
+        div4.appendChild(button);
+
+        let div5 = document.createElement('div');
+        div5.appendChild(div4);
+
+        let div6 = document.createElement('div');
+        div6.appendChild(div3);
+        div6.appendChild(div5);
+        manageExpenseElementsDiv.appendChild(div6);
+    })
+}
+
+
+export { createTransactionLog, onPageStart, updateBudgetBalance, addExpenseToTransactionLog, manageExpensesModal }
